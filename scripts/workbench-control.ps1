@@ -122,11 +122,16 @@ function Start-Workbench {
     return
   }
 
-  $nodeCommand = Get-Command node -ErrorAction SilentlyContinue
-  if ($null -eq $nodeCommand) { throw "NODE_NOT_FOUND: install Node.js 24 or newer and ensure node is on PATH." }
-  $nodeVersionText = (& $nodeCommand.Source --version).Trim().TrimStart("v")
+  $portableNode = Join-Path $projectRoot "runtime/node.exe"
+  $nodeCommand = if (Test-Path -LiteralPath $portableNode -PathType Leaf) { $portableNode } else { (Get-Command node -ErrorAction SilentlyContinue).Source }
+  if (-not $nodeCommand) { throw "NODE_NOT_FOUND: use the Windows portable release, or install Node.js 24 or newer." }
+  $nodeVersionText = (& $nodeCommand --version).Trim().TrimStart("v")
   $nodeMajor = [int]($nodeVersionText.Split(".")[0])
   if ($nodeMajor -lt 24) { throw "NODE_VERSION_UNSUPPORTED: found $nodeVersionText, require 24 or newer." }
+
+  $setupScript = Join-Path $projectRoot "scripts/setup-local.mjs"
+  & $nodeCommand $setupScript | Out-Null
+  if ($LASTEXITCODE -ne 0) { throw "LOCAL_SETUP_FAILED: could not initialize empty local data." }
 
   $timestamp = [DateTimeOffset]::UtcNow.ToString("yyyyMMdd-HHmmssfff")
   $stdoutPath = Join-Path $logRoot "workbench-$timestamp.out.log"
@@ -134,7 +139,7 @@ function Start-Workbench {
   $previousPort = [Environment]::GetEnvironmentVariable("XHS_WORKBENCH_PORT", "Process")
   try {
     [Environment]::SetEnvironmentVariable("XHS_WORKBENCH_PORT", [string]$Port, "Process")
-    $process = Start-Process -FilePath $nodeCommand.Source `
+    $process = Start-Process -FilePath $nodeCommand `
       -ArgumentList @("--use-env-proxy", "--experimental-strip-types", $serverPath) `
       -WorkingDirectory $projectRoot `
       -WindowStyle Hidden `

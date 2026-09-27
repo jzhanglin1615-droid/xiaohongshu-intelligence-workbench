@@ -45,3 +45,11 @@ test("double-click launchers call the same audited runtime controller", () => {
   assert.match(stopLauncher, /workbench-control\.ps1" -Action Stop/);
   assert.match(statusLauncher, /workbench-control\.ps1" -Action Status/);
 });
+
+test("first launch prefers bundled Node and initializes only missing local files", () => {
+  assert.match(control, /Join-Path \$projectRoot "runtime\/node\.exe"/);
+  assert.match(control, /Test-Path -LiteralPath \$portableNode -PathType Leaf/);
+  assert.match(control, /Join-Path \$projectRoot "scripts\/setup-local\.mjs"/);
+  assert.match(control, /if \(\$LASTEXITCODE -ne 0\) \{ throw "LOCAL_SETUP_FAILED/);
+  assert.ok(control.indexOf("& $nodeCommand $setupScript") < control.indexOf("Start-Process -FilePath $nodeCommand"));
+});
