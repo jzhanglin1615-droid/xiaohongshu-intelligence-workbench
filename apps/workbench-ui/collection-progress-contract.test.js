@@ -3,9 +3,9 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 import { runInNewContext } from "node:vm";
 
-const server = readFileSync(new URL("./server.mjs", import.meta.url), "utf8");
-const app = readFileSync(new URL("./app.js", import.meta.url), "utf8");
-const extension = readFileSync(new URL("../browser-extension/service-worker.js", import.meta.url), "utf8");
+const server = readFileSync(new URL("./server.mjs", import.meta.url), "utf8").replace(/\r\n/g, "\n");
+const app = readFileSync(new URL("./app.js", import.meta.url), "utf8").replace(/\r\n/g, "\n");
+const extension = readFileSync(new URL("../browser-extension/service-worker.js", import.meta.url), "utf8").replace(/\r\n/g, "\n");
 const source = server.match(/function currentCollectionProgress\(runtime\) \{([\s\S]*?)\n\}\n\nasync function saveCollectionHistory/)?.[1];
 assert.ok(source);
 const progressFor = (runtime) => runInNewContext(`(function currentCollectionProgress(runtime) {${source}\n})`, {})(runtime);

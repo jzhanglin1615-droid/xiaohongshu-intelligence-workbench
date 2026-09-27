@@ -4,7 +4,7 @@ import test from "node:test";
 import { runInNewContext } from "node:vm";
 import { directionTerms } from "./market-trends.js";
 
-const app = readFileSync(new URL("./app.js", import.meta.url), "utf8");
+const app = readFileSync(new URL("./app.js", import.meta.url), "utf8").replace(/\r\n/g, "\n");
 
 test("background market rerender keeps both unsaved direction inputs", () => {
   const body = app.match(/function renderMarket\(\) \{([\s\S]*?)\n\}\nfunction renderMarketDrill/)?.[1];

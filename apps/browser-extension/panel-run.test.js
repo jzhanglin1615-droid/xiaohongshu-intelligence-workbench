@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 import { runInNewContext } from "node:vm";
 
-const script = readFileSync(new URL("./content-script.js", import.meta.url), "utf8");
+const script = readFileSync(new URL("./content-script.js", import.meta.url), "utf8").replace(/\r\n/g, "\n");
 
 test("browser panel presents the canonical collection progress used by the workbench", async () => {
   const source = script.match(/const refreshRun = async \(\) => \{([\s\S]*?)\n  \};/)?.[1];

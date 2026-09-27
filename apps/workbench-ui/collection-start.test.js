@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 import { runInNewContext } from "node:vm";
 
-const app = readFileSync(new URL("./app.js", import.meta.url), "utf8");
+const app = readFileSync(new URL("./app.js", import.meta.url), "utf8").replace(/\r\n/g, "\n");
 
 test("a storage failure cannot hide a successfully dispatched collection", async () => {
   const body = app.match(/el\("keyword-form"\)\.addEventListener\("submit", async \(event\) => \{([\s\S]*?)\n\}\);/)?.[1];
