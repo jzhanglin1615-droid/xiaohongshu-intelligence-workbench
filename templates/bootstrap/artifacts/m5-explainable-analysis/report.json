@@ -1,0 +1,16 @@
+{
+  "status": "EMPTY_LOCAL_PREVIEW",
+  "generatedAt": null,
+  "evidenceMode": "NO_DATA",
+  "scopeId": null,
+  "formulaVersion": null,
+  "observationWindow": null,
+  "sample": null,
+  "assessments": [],
+  "decisionCards": [],
+  "notes": [],
+  "completeness": [],
+  "rankingSnapshots": [],
+  "rankingSignals": [],
+  "readiness": { "realPlatformCollection": "NOT_VALIDATED" }
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0.0",
+  "dataMode": "LIVE_PLATFORM",
+  "rankingMonitor": {
+    "enabled": false,
+    "autoArmSuppressed": true,
+    "intervalMinutes": 60,
+    "scopeId": "ranking:auto:xiaohongshu",
+    "mode": "REAL_ADAPTER",
+    "targetUrl": "https://www.xiaohongshu.com/search_result?keyword=%E5%B0%8F%E7%BA%A2%E4%B9%A6",
+    "collectorKind": "EXTENSION",
+    "searchLimit": 50,
+    "commentLimit": 50,
+    "maxDetailTargets": 0,
+    "maxRefillRounds": 0,
+    "requestIntervalMs": 1500,
+    "slowNetworkMaxWaitMs": 300000
+  },
+  "rankingRuns": [],
+  "rankingDispatchHistory": [],
+  "collectionHistory": [],
+  "connections": { "matrixAccounts": [], "feishu": { "enabled": false, "webhookEnv": "FEISHU_WEBHOOK_URL" } },
+  "browserBridge": {},
+  "browserTasks": [],
+  "keywordRuns": [],
+  "startupRecoveryHistory": [],
+  "rankingMonitorReceipts": [],
+  "rankingMonitorSchedule": {},
+  "realCollectorHistory": [],
+  "researchRuns": [],
+  "updatedAt": null
+}

@@ -1,0 +1,14 @@
+{
+  "storeVersion": "1.0.0",
+  "rawEnvelopes": [],
+  "notes": [],
+  "qualityDecisions": [],
+  "checkpoints": [],
+  "retryQueues": [],
+  "rankingLedgers": [],
+  "completenessLedgers": [],
+  "enrichmentPlans": [],
+  "collectionRunLedgers": [],
+  "viralAssessments": [],
+  "contentDecisionCards": []
+}

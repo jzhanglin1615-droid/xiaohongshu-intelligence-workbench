@@ -1,0 +1,6 @@
+{
+  "schemaVersion": "2.0.0",
+  "projectStatus": "PRODUCT_IMPLEMENTATION",
+  "direction": { "status": "UNSET", "name": null, "audience": null, "valueProposition": null, "persona": null, "contentFormat": null, "commercialGoal": null, "userConfirmed": false, "confirmedAt": null, "authority": null },
+  "product": { "name": "小红书内容情报台", "status": "LOCAL_PREVIEW" }
+}
