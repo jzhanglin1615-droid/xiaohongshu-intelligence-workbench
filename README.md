@@ -14,7 +14,7 @@
 
 ## Windows 首次使用
 
-如果下载的是标有 `windows-x64` 的便携版 ZIP，解压到普通文件夹后双击 **`启动采集台.cmd`**。它自带 Node.js，不需要安装 npm 依赖；首次启动会创建空白的本地数据文件，不会覆盖原有数据。浏览器应自动打开 `http://127.0.0.1:4173/`。以后可用同目录的 `停止采集台.cmd` 和 `查看采集台状态.cmd`。
+从 [GitHub 发布页](https://github.com/jzhanglin1615-droid/xiaohongshu-intelligence-workbench/releases) 下载标有 `windows-x64` 的便携版 ZIP，解压到普通文件夹后双击 **`启动采集台.cmd`**。它自带 Node.js，不需要安装 npm 依赖；首次启动会创建空白的本地数据文件，不会覆盖原有数据。浏览器应自动打开 `http://127.0.0.1:4173/`。以后可用同目录的 `停止采集台.cmd` 和 `查看采集台状态.cmd`。
 
 **GitHub 页面上的“Download ZIP / 下载源码”不是便携版**，不含 Node.js，需按下方“从源码运行”安装环境。便携版下载前请核对发布页的 SHA-256。若 Windows 提示来源不明，应先确认下载地址与文件校验值，不要盲目跳过安全提示。
 
