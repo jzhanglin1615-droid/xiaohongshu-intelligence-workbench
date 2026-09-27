@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.xhs-workbench/contracts/retry-queue-snapshot.schema.json",
+  "title": "RetryQueueSnapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "taskId", "items", "updatedAt"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "taskId": { "type": "string", "minLength": 1 },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["targetId", "state", "attempts", "maxAttempts", "nextAttemptAt", "lastError"],
+        "properties": {
+          "targetId": { "type": "string", "minLength": 1 },
+          "state": { "enum": ["QUEUED", "IN_PROGRESS", "RESOLVED", "EXHAUSTED", "BLOCKED"] },
+          "attempts": { "type": "integer", "minimum": 0 },
+          "maxAttempts": { "type": "integer", "minimum": 1, "maximum": 10 },
+          "nextAttemptAt": { "type": ["string", "null"], "format": "date-time" },
+          "lastError": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["targetId", "category", "code", "message", "retryable"],
+            "properties": {
+              "targetId": { "type": "string", "minLength": 1 },
+              "category": { "enum": ["RETRYABLE", "NEEDS_HUMAN", "PERMANENT", "POLICY_BLOCKED"] },
+              "code": { "type": "string", "minLength": 1 },
+              "message": { "type": "string", "minLength": 1 },
+              "retryable": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+    "updatedAt": { "type": "string", "format": "date-time" }
+  }
+}

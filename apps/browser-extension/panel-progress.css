@@ -1,0 +1,109 @@
+#xhs-intelligence-panel .xiw-progress-track {
+  height: 9px;
+  border-radius: 999px;
+  background: #eceef1;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px #dedfe2;
+}
+
+#xhs-intelligence-panel .xiw-progress-track i {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #bf343d, #e96a70);
+  transition: width .28s ease;
+}
+
+#xhs-intelligence-panel .xiw-progress-copy {
+  color: #59606a;
+  font-size: 12px;
+  margin-top: -6px;
+}
+
+#xhs-intelligence-panel .xiw-page-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 1px 2px;
+  color: #747985;
+  font-size: 12px;
+}
+
+#xhs-intelligence-panel .xiw-page-line strong {
+  color: #353b45;
+  font-size: 12px;
+  text-align: right;
+}
+
+#xhs-intelligence-panel .xiw-unified-card {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid #e3e5e9;
+  border-radius: 16px;
+  background: #fff;
+}
+
+#xhs-intelligence-panel .xiw-unified-card .xiw-run,
+#xhs-intelligence-panel .xiw-unified-card .xiw-limit,
+#xhs-intelligence-panel .xiw-unified-card .xiw-auto {
+  padding: 0;
+  background: transparent;
+}
+
+#xhs-intelligence-panel .xiw-unified-card .xiw-run strong {
+  color: #1f252d;
+  font-size: 16px;
+}
+
+#xhs-intelligence-panel .xiw-unified-card .xiw-run span {
+  font-size: 12px;
+}
+
+#xhs-intelligence-panel .xiw-unified-card .xiw-progress-copy {
+  margin: 0;
+}
+
+#xhs-intelligence-panel .xiw-unified-card .xiw-counts {
+  padding: 0 0 10px;
+  border-bottom: 1px solid #edf0f3;
+}
+
+#xhs-intelligence-panel .xiw-unified-card .xiw-auto {
+  padding-top: 11px;
+  border-top: 1px solid #edf0f3;
+}
+
+#xhs-intelligence-panel .xiw-unified-card .xiw-auto strong {
+  color: #16784a;
+}
+
+#xhs-intelligence-panel .xiw-card-title{display:flex;align-items:center;justify-content:space-between;color:#c33640;font-size:16px;font-weight:700;border-bottom:1px solid #e5e8ee;padding-bottom:10px}
+#xhs-intelligence-panel .xiw-card-title small{color:#8b919b;font-size:11px;font-weight:400}
+#xhs-intelligence-panel .xiw-facts{display:grid;gap:7px;margin:0;padding:4px 0 2px}
+#xhs-intelligence-panel .xiw-facts>div{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+#xhs-intelligence-panel .xiw-facts dt{color:#737b87;font-size:13px;flex:none}
+#xhs-intelligence-panel .xiw-facts dd{margin:0;text-align:right;color:#202630;font-size:14px;font-weight:700;overflow-wrap:anywhere}
+#xhs-intelligence-panel .xiw-badge{display:inline-block;padding:3px 8px;border-radius:7px;background:#fff3df;color:#9b6417;font-size:12px}
+#xhs-intelligence-panel .xiw-badge.good{background:#e9f7f1;color:#177b54}
+#xhs-intelligence-panel .xiw-badge.block{background:#ffebed;color:#b42e3e}
+#xhs-intelligence-panel .xiw-run-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+#xhs-intelligence-panel .xiw-run-actions button,#xhs-intelligence-panel .xiw-export summary{display:block;width:100%;padding:8px 3px;border:1px solid #e0e4eb;border-radius:10px;background:#fff;color:#2f3540;text-align:center;font:700 13px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;cursor:pointer}
+#xhs-intelligence-panel .xiw-run-actions button:disabled,#xhs-intelligence-panel .xiw-more button:disabled{opacity:.45;cursor:not-allowed}
+#xhs-intelligence-panel .xiw-export{position:relative}
+#xhs-intelligence-panel .xiw-export summary{list-style:none}
+#xhs-intelligence-panel .xiw-export summary::-webkit-details-marker{display:none}
+#xhs-intelligence-panel .xiw-export>div{position:absolute;right:0;top:calc(100% + 4px);z-index:2;min-width:95px;padding:4px;background:#fff;border:1px solid #e0e4eb;border-radius:9px;box-shadow:0 10px 25px #20263025}
+#xhs-intelligence-panel .xiw-export a{display:block;padding:5px 8px;color:#2f3540;text-decoration:none;cursor:pointer}
+#xhs-intelligence-panel .xiw-export a:hover{background:#f6f7f9}
+#xhs-intelligence-panel .xiw-more{border-top:1px solid #e8eaf0;padding-top:9px;color:#68717d;font-size:12px}
+#xhs-intelligence-panel .xiw-more>summary{cursor:pointer;list-style:disclosure-closed}
+#xhs-intelligence-panel .xiw-more[open]>summary{margin-bottom:10px}
+#xhs-intelligence-panel .xiw-mini-stats{display:flex;gap:8px;margin-bottom:8px}
+#xhs-intelligence-panel .xiw-mini-stats span{flex:1;padding:7px;background:#f6f7f9;border-radius:8px;text-align:center}
+#xhs-intelligence-panel .xiw-mini-stats b{display:block;color:#252a33}
+#xhs-intelligence-panel [data-role='collection-keyword-list']{white-space:pre-line;color:#4a5260;line-height:1.8;margin-bottom:7px}
+#xhs-intelligence-panel .xiw-more button[data-action='cancel']{padding:7px 11px;border:1px solid #e88f96;border-radius:8px;background:#fff;color:#ba3541;cursor:pointer}
+#xhs-intelligence-panel .xiw-more .xiw-limit{padding:0 0 10px}

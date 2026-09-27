@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.xhs-workbench/contracts/quality-decision.schema.json",
+  "title": "QualityDecision",
+  "type": "object",
+  "required": ["schemaVersion", "entityType", "entityId", "decision", "issues", "evaluatedAt", "rulesVersion"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "entityType": { "enum": ["NOTE", "DATASET", "EXPORT"] },
+    "entityId": { "type": "string", "minLength": 1 },
+    "decision": { "enum": ["PASS", "WARN", "BLOCK"] },
+    "issues": { "type": "array" },
+    "evaluatedAt": { "type": "string", "format": "date-time" },
+    "rulesVersion": { "type": "string", "minLength": 1 }
+  }
+}

@@ -1,0 +1,15 @@
+node_modules/
+artifacts/
+state/
+coverage/
+*.log
+*.tmp
+*.sqlite
+*.sqlite3
+*.db
+*.pem
+*.key
+*.p12
+.env
+.env.*
+!.env.example

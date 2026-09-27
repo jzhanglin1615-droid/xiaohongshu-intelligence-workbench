@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.xhs-workbench/contracts/note-completeness-ledger.schema.json",
+  "title": "NoteCompletenessLedger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "noteId", "detail", "comments", "overallStatus", "observationCount", "updatedAt"],
+  "$defs": {
+    "status": { "enum": ["COMPLETE", "PROVISIONAL", "PARTIAL", "INACCESSIBLE", "DRIFTED", "HUMAN_REQUIRED"] },
+    "stringArray": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+  },
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "noteId": { "type": "string", "minLength": 1 },
+    "detail": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "requiredFields", "presentFields", "missingFields", "evidenceEnvelopeIds"],
+      "properties": {
+        "status": { "$ref": "#/$defs/status" },
+        "requiredFields": { "$ref": "#/$defs/stringArray" },
+        "presentFields": { "$ref": "#/$defs/stringArray" },
+        "missingFields": { "$ref": "#/$defs/stringArray" },
+        "evidenceEnvelopeIds": { "$ref": "#/$defs/stringArray" }
+      }
+    },
+    "comments": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "platformDeclaredTotal", "capturedTopLevelIds", "capturedReplyIds", "capturedTopLevelCount", "capturedReplyCount", "capturedUniqueCount", "countGap", "topLevelPaginationExhausted", "unresolvedReplyThreads", "replyThreads", "nextCursor", "evidenceEnvelopeIds"],
+      "properties": {
+        "status": { "$ref": "#/$defs/status" },
+        "platformDeclaredTotal": { "type": ["integer", "null"], "minimum": 0 },
+        "capturedTopLevelIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "capturedReplyIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "capturedTopLevelCount": { "type": "integer", "minimum": 0 },
+        "capturedReplyCount": { "type": "integer", "minimum": 0 },
+        "capturedUniqueCount": { "type": "integer", "minimum": 0 },
+        "countGap": { "type": ["integer", "null"], "minimum": 0 },
+        "topLevelPaginationExhausted": { "type": "boolean" },
+        "unresolvedReplyThreads": { "type": "integer", "minimum": 0 },
+        "replyThreads": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["parentCommentId", "declaredReplyCount", "capturedReplyIds", "capturedReplyCount", "expansionExhausted", "missingReplyCount"],
+            "properties": {
+              "parentCommentId": { "type": "string", "minLength": 1 },
+              "declaredReplyCount": { "type": ["integer", "null"], "minimum": 0 },
+              "capturedReplyIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+              "capturedReplyCount": { "type": "integer", "minimum": 0 },
+              "expansionExhausted": { "type": "boolean" },
+              "missingReplyCount": { "type": ["integer", "null"], "minimum": 0 }
+            }
+          }
+        },
+        "nextCursor": { "type": ["string", "null"] },
+        "evidenceEnvelopeIds": { "$ref": "#/$defs/stringArray" }
+      }
+    },
+    "overallStatus": { "enum": ["COMPLETE", "PROVISIONAL", "PARTIAL", "BLOCKED"] },
+    "observationCount": { "type": "integer", "minimum": 1 },
+    "updatedAt": { "type": "string", "format": "date-time" }
+  }
+}

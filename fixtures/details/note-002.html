@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><title>素材缺口夹具</title></head>
+<body>
+  <article data-fixture="note-detail">正文存在，但素材清单故意少一项。</article>
+  <script id="xhs-fixture" type="application/json">
+  {
+    "kind": "NOTE_DETAIL",
+    "sourceUrl": "https://example.invalid/note/note-002",
+    "collectedAt": "2026-09-24T00:02:00.000Z",
+    "data": {
+      "noteId": "note-002",
+      "title": "我的本地工作流记录",
+      "body": "这条离线样本用于证明素材缺口会显示为警告，而不会被默认为完整。",
+      "authorId": "author-002",
+      "authorName": "示例作者乙",
+      "sourceUrl": "https://example.invalid/note/note-002",
+      "metrics": { "likes": 90, "collects": 30, "comments": 5 },
+      "expectedAssetCount": 2,
+      "assets": [
+        { "type": "IMAGE", "ordinal": 1, "sourceUrl": "https://example.invalid/assets/note-002-1.jpg" }
+      ]
+    }
+  }
+  </script>
+</body>
+</html>

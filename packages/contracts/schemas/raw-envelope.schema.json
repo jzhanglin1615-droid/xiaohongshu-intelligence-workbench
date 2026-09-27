@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.xhs-workbench/contracts/raw-envelope.schema.json",
+  "title": "RawEnvelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "envelopeId", "kind", "sourceUrl", "collectedAt", "parserVersion", "payload", "evidence"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "envelopeId": { "type": "string", "minLength": 1 },
+    "kind": { "enum": ["SEARCH_RESULTS", "NOTE_DETAIL", "COMMENT_PAGE"] },
+    "sourceUrl": { "type": "string", "minLength": 1 },
+    "collectedAt": { "type": "string", "format": "date-time" },
+    "parserVersion": { "type": "string", "minLength": 1 },
+    "payload": {},
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fixturePath", "sha256"],
+      "properties": {
+        "fixturePath": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" }
+      }
+    }
+  }
+}

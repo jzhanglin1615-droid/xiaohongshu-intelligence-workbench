@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ContentDecisionCard",
+  "type": "object",
+  "required": ["schemaVersion", "cardId", "assessmentId", "noteId", "status", "opportunitySummary", "audienceQuestionHypothesis", "angleHypothesis", "openingHypotheses", "structureHypotheses", "materialRequirements", "differentiationChecks", "risks", "evidenceEnvelopeIds", "limitations", "requiresContentDirection", "createdAt"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "cardId": { "type": "string", "minLength": 1 },
+    "assessmentId": { "type": "string", "minLength": 1 },
+    "noteId": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["RESEARCH_READY", "INSUFFICIENT_EVIDENCE", "BLOCKED"] },
+    "opportunitySummary": { "type": "string", "minLength": 1 },
+    "audienceQuestionHypothesis": { "type": "string", "minLength": 1 },
+    "angleHypothesis": { "type": "string", "minLength": 1 },
+    "openingHypotheses": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "structureHypotheses": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "materialRequirements": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "differentiationChecks": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "risks": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "evidenceEnvelopeIds": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "limitations": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "requiresContentDirection": { "type": "boolean" },
+    "createdAt": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,93 @@
+/* Final, shared type contract. Component layout must not define its own type scale.
+   !important is limited to typography to retire accumulated legacy overrides. */
+:root {
+  --font-ui: "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+  --type-page: 32px;
+  --type-section: 22px;
+  --type-title: 18px;
+  --type-body: 16px;
+  --type-caption: 15px;
+  --type-ink: #20242a;
+  --type-muted: #626a75;
+  --type-red: #bd2939;
+  --type-green: #287a55;
+  --type-yellow: #956600;
+  --ink: var(--type-ink);
+  --muted: var(--type-muted);
+  --danger: var(--type-red);
+  --accent: var(--type-red);
+  --good: var(--type-green);
+  --warn: var(--type-yellow);
+}
+body, button, input, select, textarea {
+  font-family: var(--font-ui) !important;
+  font-style: normal !important;
+  font-size: var(--type-body);
+  line-height: 1.6;
+}
+h1, h2, h3, h4, p, small, label, summary, th, td, dt, dd, a, span, strong, b {
+  font-family: inherit;
+  font-style: normal;
+}
+main h1 { font-size: var(--type-page) !important; font-weight: 700 !important; line-height: 1.3 !important; letter-spacing: 0 !important; color: var(--type-ink) !important; }
+main h2, .collection-card-anchor > strong {
+  font-size: var(--type-section) !important; font-weight: 700 !important;
+  line-height: 1.4 !important; letter-spacing: 0 !important; color: var(--type-ink) !important;
+}
+main h3, .market-topic-main strong, .market-post-main strong,
+.favorite-row strong, .note-cell strong, .history-item .title-link,
+.live-ranking-table .title-link, .pending-candidate .title-link, .candidate-title {
+  font-size: var(--type-title) !important; font-weight: 600 !important;
+  line-height: 1.5 !important; letter-spacing: 0 !important; color: var(--type-ink);
+}
+main p, main li, main td, .catalog, .collection-progress-copy, .collection-task-facts dd {
+  font-size: var(--type-body) !important; line-height: 1.6 !important;
+}
+main label, main th, .market-topic-header, .market-post-header,
+.market-topic-header > span, .market-post-header > span, main summary {
+  font-size: var(--type-body) !important; font-weight: 600 !important;
+  line-height: 1.5 !important; color: var(--type-muted) !important;
+}
+main small, main dt, .panel-heading p, .section-intro p,
+.collection-purpose p, .collection-result-action p, .collection-diagnostics > p,
+.collection-promise, .collection-hint, .connector-help, .direction-feedback,
+.scope-chip, .refresh-help, .market-control-foot, .live-ranking-summary,
+.metric-coverage, .market-topic-updated, .history-item span, .history-item p,
+.connection-key-state span, .detail-metrics span, .detail-verdicts span,
+.detail-comments > article span, .inspector-section p, .inspector-section li {
+  font-size: var(--type-caption) !important; font-weight: 400 !important;
+  line-height: 1.6 !important; letter-spacing: 0 !important; color: var(--type-muted);
+}
+main input, main select, main textarea {
+  font-size: var(--type-body) !important; font-weight: 400 !important;
+  line-height: 1.6 !important; color: var(--type-ink) !important;
+}
+main :is(input, textarea)::placeholder { color: var(--type-muted); font-weight: 400; }
+.primary, .secondary, .danger, .back-button, .filter, .file-picker,
+.ranking-shortcuts a, .market-control-head .top-actions > button {
+  font-size: var(--type-body) !important; font-weight: 600 !important;
+  line-height: 1.5 !important; letter-spacing: 0 !important;
+}
+.kicker, .eyebrow, .collection-step {
+  font-size: var(--type-caption) !important; font-weight: 600 !important;
+  line-height: 1.5 !important; letter-spacing: 0 !important; color: var(--type-red) !important;
+}
+.market-topic-score, .market-post-metrics, .market-post-metrics > span,
+.ranking-evidence strong, .score, .collection-task-facts dd, .metric-change,
+.market-trend, .market-rank, .badge {
+  font-size: var(--type-body) !important; font-weight: 600 !important;
+  line-height: 1.5 !important; font-variant-numeric: tabular-nums;
+}
+/* Rank emphasis must never override directional status semantics. */
+.top-three :is(.market-topic-main, .market-post-main) :is(strong, small),
+.top-three :is(.market-topic-score, .market-topic-updated, .market-chevron, .market-post-metrics),
+.top-three .market-post-actions button,
+.live-ranking-table tbody tr:nth-child(-n+3) :is(.title-link, .metric-cell b, .ranking-reason),
+.live-ranking-table tbody tr:nth-child(-n+3) .row-actions :is(button,a),
+.live-ranking-table .rank-top { color: var(--type-red) !important; }
+.market-trend.up, .metric-change.positive { color: var(--type-red) !important; }
+.market-trend.down, .metric-change.negative { color: var(--type-green) !important; }
+.market-trend.flat, .badge.warn { color: var(--type-yellow) !important; }
+.badge.good { color: var(--type-green) !important; }
+.badge.block, .model-list-error { color: var(--type-red) !important; }
+@media (max-width: 760px) { :root { --type-page: 28px; } }

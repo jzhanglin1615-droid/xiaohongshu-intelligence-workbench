@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "小红书内容情报台浏览器桥",
+  "version": "0.9.7",
+  "description": "按本机任务队列连续打开目标，并把当前可见的小红书页面以只读快照发送到内容情报台。",
+  "permissions": ["storage", "activeTab", "alarms"],
+  "host_permissions": [
+    "http://127.0.0.1:4173/*",
+    "https://www.xiaohongshu.com/*"
+  ],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.xiaohongshu.com/*"],
+      "js": ["extractor.js", "auto-run-controller.js", "comment-traversal-controller.js", "content-script.js"],
+      "css": ["panel.css", "panel-progress.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "小红书内容情报台"
+  }
+}

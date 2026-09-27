@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.xhs-workbench/contracts/canonical-note.schema.json",
+  "title": "CanonicalNote",
+  "type": "object",
+  "required": ["schemaVersion", "noteId", "title", "body", "author", "metrics", "assets", "expectedAssetCount", "keywords", "detailStatus", "provenance"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "noteId": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "body": { "type": ["string", "null"] },
+    "author": { "type": "object", "required": ["authorId", "displayName"] },
+    "metrics": { "type": "object", "required": ["likes", "collects", "comments", "observedAt"] },
+    "assets": { "type": "array" },
+    "expectedAssetCount": { "type": ["integer", "null"], "minimum": 0 },
+    "keywords": { "type": "array", "items": { "type": "string" } },
+    "detailStatus": { "enum": ["COMPLETE", "INCOMPLETE"] },
+    "provenance": { "type": "object", "required": ["sourceUrls", "envelopeIds", "parserVersions", "collectedAt"] }
+  }
+}

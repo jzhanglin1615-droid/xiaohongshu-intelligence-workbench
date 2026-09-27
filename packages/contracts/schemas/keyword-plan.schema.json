@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.xhs-workbench/contracts/keyword-plan.schema.json",
+  "title": "KeywordPlan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "planId", "taskId", "policy", "nodes", "edges", "estimatedNoteDetails", "truncation", "createdAt"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "planId": { "type": "string", "minLength": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maxDepth", "maxKeywords", "maxChildrenPerKeyword", "noteDetailsPerKeyword", "maxEstimatedNoteDetails", "excludedTerms"],
+      "properties": {
+        "maxDepth": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "maxKeywords": { "type": "integer", "minimum": 1, "maximum": 500 },
+        "maxChildrenPerKeyword": { "type": "integer", "minimum": 0, "maximum": 50 },
+        "noteDetailsPerKeyword": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "maxEstimatedNoteDetails": { "type": "integer", "minimum": 1, "maximum": 10000 },
+        "excludedTerms": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["keywordId", "value", "normalized", "depth", "source", "status"],
+        "properties": {
+          "keywordId": { "type": "string", "minLength": 1 },
+          "value": { "type": "string", "minLength": 1 },
+          "normalized": { "type": "string", "minLength": 1 },
+          "depth": { "type": "integer", "minimum": 0 },
+          "source": { "enum": ["SEED", "SUGGESTION"] },
+          "status": { "const": "QUEUED" }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["parentKeywordId", "childKeywordId", "source"],
+        "properties": {
+          "parentKeywordId": { "type": "string", "minLength": 1 },
+          "childKeywordId": { "type": "string", "minLength": 1 },
+          "source": { "const": "SUGGESTION" }
+        }
+      }
+    },
+    "estimatedNoteDetails": { "type": "integer", "minimum": 0 },
+    "truncation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hitKeywordLimit", "hitNoteBudget", "prunedByDepth", "prunedByExclusion", "prunedByChildLimit"],
+      "properties": {
+        "hitKeywordLimit": { "type": "boolean" },
+        "hitNoteBudget": { "type": "boolean" },
+        "prunedByDepth": { "type": "integer", "minimum": 0 },
+        "prunedByExclusion": { "type": "integer", "minimum": 0 },
+        "prunedByChildLimit": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "createdAt": { "type": "string", "format": "date-time" }
+  }
+}

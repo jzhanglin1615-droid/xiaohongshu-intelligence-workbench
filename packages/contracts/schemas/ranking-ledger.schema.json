@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.xhs-workbench/contracts/ranking-ledger.schema.json",
+  "title": "RankingLedger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "scopeId", "snapshots", "latestSignals", "updatedAt"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "scopeId": { "type": "string", "minLength": 1 },
+    "snapshots": { "type": "array", "minItems": 1, "items": { "$ref": "ranking-snapshot.schema.json" } },
+    "latestSignals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["noteId", "kind", "previousRank", "currentRank", "rankDelta", "consecutiveAppearances", "firstSeenAt", "lastSeenAt", "priorityScore"],
+        "properties": {
+          "noteId": { "type": "string", "minLength": 1 },
+          "kind": { "enum": ["NEW_ENTRY", "REENTERED", "RISING", "FALLING", "UNCHANGED", "DROPPED", "NOT_OBSERVED"] },
+          "previousRank": { "type": ["integer", "null"], "minimum": 1 },
+          "currentRank": { "type": ["integer", "null"], "minimum": 1 },
+          "rankDelta": { "type": ["integer", "null"] },
+          "consecutiveAppearances": { "type": "integer", "minimum": 0 },
+          "firstSeenAt": { "type": "string", "format": "date-time" },
+          "lastSeenAt": { "type": "string", "format": "date-time" },
+          "priorityScore": { "type": "number", "minimum": 0, "maximum": 100 }
+        }
+      }
+    },
+    "updatedAt": { "type": "string", "format": "date-time" }
+  }
+}

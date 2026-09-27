@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><title>脱敏详情页 DOM 观察夹具</title></head>
+<body data-snapshot-purpose="offline-contract-test">
+  <article>这是人工构造的脱敏详情页观察，不是平台页面副本。</article>
+  <script id="xhs-page-observation" type="application/json">
+  {
+    "schemaVersion": "1.0.0",
+    "pageType": "NOTE_DETAIL",
+    "data": {
+      "noteId": "note-001",
+      "title": "三个效率工具的实际用法",
+      "body": "这是用于浏览器边界契约测试的完全脱敏正文。",
+      "authorId": "author-001",
+      "authorName": "示例作者甲",
+      "sourceUrl": "https://example.invalid/note/note-001",
+      "metrics": { "likes": 123, "collects": 45, "comments": 9 },
+      "expectedAssetCount": 2,
+      "assets": [
+        { "type": "IMAGE", "ordinal": 1, "sourceUrl": "https://example.invalid/assets/note-001-1.jpg" },
+        { "type": "IMAGE", "ordinal": 2, "sourceUrl": "https://example.invalid/assets/note-001-2.jpg" }
+      ]
+    }
+  }
+  </script>
+</body>
+</html>

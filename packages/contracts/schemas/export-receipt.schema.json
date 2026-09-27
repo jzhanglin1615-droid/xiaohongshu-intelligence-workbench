@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.xhs-workbench/contracts/export-receipt.schema.json",
+  "title": "ExportReceipt",
+  "type": "object",
+  "required": ["schemaVersion", "exportId", "taskId", "format", "outputPath", "rowCount", "failedCount", "sha256", "fieldsVersion", "createdAt"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "exportId": { "type": "string", "minLength": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "format": { "enum": ["JSON", "CSV"] },
+    "outputPath": { "type": "string", "minLength": 1 },
+    "rowCount": { "type": "integer", "minimum": 0 },
+    "failedCount": { "type": "integer", "minimum": 0 },
+    "sha256": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "fieldsVersion": { "type": "string", "minLength": 1 },
+    "createdAt": { "type": "string", "format": "date-time" }
+  }
+}

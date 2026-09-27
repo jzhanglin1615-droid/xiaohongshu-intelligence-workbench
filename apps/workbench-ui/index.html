@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>小红书爆款采集分析</title>
+    <link rel="stylesheet" href="/apps/workbench-ui/styles.css" />
+    <link rel="stylesheet" href="/apps/workbench-ui/ui-polish.css" />
+    <link rel="stylesheet" href="/apps/workbench-ui/typography.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="主导航">
+        <div class="brand"><span class="brand-mark">爆</span><span>小红书爆款采集分析</span></div>
+        <nav class="primary-nav">
+          <button class="nav-item active" data-view="overview" type="button"><span>势</span>趋势与榜单</button>
+          <button class="nav-item" data-view="collection" type="button"><span>采</span>采集</button>
+          <button class="nav-item" data-view="database" type="button"><span>藏</span>我的收藏</button>
+          <button class="nav-item" data-view="history" type="button"><span>库</span>资料库</button>
+        </nav>
+        <div class="sidebar-tools"><button class="nav-item" data-view="models" type="button"><span>设</span>模型连接</button></div>
+        <div class="sidebar-foot"><span class="status-light" id="server-light"></span><div><strong id="server-state">正在连接</strong><small id="runtime-mode">读取运行状态</small></div></div>
+      </aside>
+
+      <main id="main-content" tabindex="-1">
+        <header class="topbar">
+          <div class="page-heading"><button class="back-button" id="view-back" type="button" hidden aria-label="返回上一层">← 返回</button><div><p class="kicker" id="page-kicker">账号运营助手</p><div class="page-title-line"><h1 id="page-title">现在什么值得做</h1><nav class="ranking-shortcuts" aria-label="榜单快捷导航"><a href="#all-ranking">全站榜单</a><a href="#direction-ranking">方向榜单</a><a href="#opportunity-ranking">实时榜单</a></nav></div></div></div>
+          <div id="topbar-refresh-host"><div class="top-actions" id="top-actions"><div class="refresh-state"><span class="scope-chip" id="scope-chip">自动同步</span><small id="refresh-feedback" role="status">正在同步</small><small class="refresh-help">同步：读取已有数据<br>更新：检查全站与当前方向</small></div><button class="secondary" type="button" id="sync" title="读取已采集的数据，不发起新采集">同步</button><button class="secondary" type="button" id="refresh" title="立即发起全站与当前方向的新一轮检查">更新</button></div></div>
+        </header>
+
+        <section class="notice" aria-live="polite" id="notice"><strong>正在连接</strong><span>读取工作台运行状态。</span></section>
+
+        <section class="view active" data-view-panel="overview">
+          <section class="market-control-panel panel" aria-label="采集和榜单控制"><div class="market-control-head"><div><span class="eyebrow">实时采集</span><h2>小红书采集工作台</h2></div><div id="market-refresh-host"></div></div><div id="market-control-host"></div><div class="market-control-foot"><span>榜单时间范围</span><div class="market-period" role="group" aria-label="榜单时间范围"><button class="filter active" data-market-hours="24" type="button" aria-pressed="true">24 小时</button><button class="filter" data-market-hours="72" type="button" aria-pressed="false">3 天</button><button class="filter" data-market-hours="168" type="button" aria-pressed="false">7 天</button></div></div></section>
+          <section class="market-board panel" id="direction-ranking"><div class="panel-heading"><div><h2>方向榜单</h2><p id="market-direction-summary">输入一个方向，系统据此筛选和扩展关键词</p></div></div><form id="market-direction-form" class="direction-form"><label>方向描述<input id="market-direction" aria-describedby="direction-feedback" placeholder="例如：帮助新手理解家庭收纳" maxlength="300" /></label><label>精确关键词（可选，逗号分隔）<input id="market-terms" placeholder="例如：衣柜收纳，厨房整理" /></label><button id="market-direction-save" class="primary" type="submit">保存方向</button><p id="direction-feedback" class="direction-feedback" role="status">只需填写方向描述。保存后可点击“更新”检查数据。</p></form><div id="market-archives" class="market-archives"></div><div id="market-direction-topics" class="market-topic-list"></div><button id="market-direction-more" class="secondary ranking-more" type="button" hidden>查看更多</button></section>
+          <section class="market-board panel" id="all-ranking"><div class="panel-heading"><div><h2>全站榜单</h2><p id="market-all-summary">读取本地样本中…</p></div></div><div id="market-all-topics" class="market-topic-list"></div><button id="market-all-more" class="secondary ranking-more" type="button" hidden>查看更多</button></section>
+          <section class="market-drill panel" id="market-drill" hidden><div class="panel-heading"><div><h2 id="market-drill-title">选题帖子</h2><p>按近期增长和互动综合排序；每条可查看同帖变化、收藏或复制地址。</p></div><button id="market-drill-close" class="secondary" type="button">收起</button></div><div id="market-drill-rows" class="market-post-list"></div><button id="market-drill-more" class="secondary ranking-more" type="button" hidden>查看更多帖子</button></section>
+          <section hidden aria-hidden="true"><section class="today-hero"><div><p>今天的小红书正在流行什么</p><h2 id="today-headline">正在读取真实榜单…</h2><span id="today-guidance"></span></div><button class="primary" id="today-open-ranking" type="button">查看全部爆款</button></section><section class="today-actions" id="today-actions"></section><section class="sector-grid" id="sector-grid"></section></section>
+          <article class="panel live-ranking-panel" id="opportunity-ranking">
+            <div class="panel-heading live-ranking-heading"><div><h2>实时榜单</h2><p id="live-ranking-caption">读取真实采集数据</p></div><div class="button-row"><span class="badge warn" id="live-ranking-status">等待数据</span><button class="secondary" id="live-ranking-refresh" type="button">立即更新</button></div></div>
+            <div class="live-ranking-summary" id="live-ranking-summary">正在读取最新榜单…</div>
+            <div id="live-ranking-pending"></div>
+            <div class="table-wrap"><table class="live-ranking-table"><thead><tr><th>排名</th><th>现在该看什么</th><th>为什么值得看</th><th>点赞</th><th>收藏</th><th>转发</th><th>操作</th></tr></thead><tbody id="live-ranking-rows"><tr><td colspan="7" class="loading-cell">正在读取真实榜单证据…</td></tr></tbody></table></div><button class="secondary ranking-more" id="ranking-more" type="button" hidden>查看更多</button>
+          </article>
+          <section hidden aria-hidden="true"><div id="ranking-run"></div><button id="pause-ranking" type="button"></button><button id="resume-ranking" type="button"></button><button id="cancel-ranking" type="button"></button><a id="export-ranking-audit" href="/api/export/ranking-run.json"></a><div id="ranking-receipts"></div></section>
+        </section>
+
+        <section class="view" data-view-panel="collection">
+          <section class="collection-purpose"><h2>用数据改善下一篇作品</h2><p>明确研究方向 → 获取参考数据 → 核对作品证据 → 小步验证与复盘。采集数量是过程，帮助你判断做什么、怎样改进才是目的。</p></section>
+          <div class="collection-layout">
+            <article class="panel collection-start-card">
+              <div class="panel-heading"><div><span class="collection-step">01 · 定义任务</span><h2>这次要找什么</h2><p>临时采集不修改已保存方向；更新方向与全站，请用“更新”。</p></div></div>
+              <form id="keyword-form" class="collection-form">
+                <button class="secondary" id="collection-use-direction" type="button">填入已保存方向</button><p id="collection-direction-feedback" class="form-hint" role="status">可使用方向榜单中的设置，也可填写临时关键词。</p>
+                <label>问题或关键词<textarea id="seed-keywords" rows="3" placeholder="每行一个问题或关键词"></textarea></label>
+                <label>本轮有效入台总目标<input id="collection-target" type="number" min="1" max="10000" step="1" value="100" /><small>整轮所有搜索词合计、按帖子去重；目标达成即停止后续搜索。候选不足会如实显示。</small></label>
+                <details class="collection-input-tools"><summary>批量导入 / 复用历史输入</summary><div class="collection-file-row"><label class="file-picker">从文件导入<input id="keyword-file" type="file" accept=".txt,.csv,.json,text/plain,text/csv,application/json" /></label><small id="keyword-file-status">支持 TXT、CSV、JSON</small></div>
+                <div class="collection-history-row"><select id="plan-history"><option value="">暂无历史任务</option></select><button class="secondary" id="reuse-plan" type="button">复用</button></div>
+                </details><button class="primary collection-start-button" id="dispatch-keyword-run" type="submit">开始本轮采集</button>
+                <p class="collection-promise">先发现候选，再逐条补采图文的点赞、收藏、转发。视频不自动打开；平台未展示的指标保留缺口，本轮显示部分完成，不补成 0。</p>
+                <details class="collection-advanced"><summary>高级设置（默认已适合日常使用）</summary><div class="form-grid">
+                  <label>扩展层级<input id="max-depth" type="number" min="0" max="3" value="1" /></label>
+                    <label>最多关键词<input id="max-keywords" type="number" min="1" max="300" value="300" /></label>
+                  <label hidden>旧版精选数量<input id="notes-per-keyword" type="number" min="1" max="12" value="5" /></label>
+                  <label hidden>每篇最多查看评论<input id="collection-comment-limit" type="number" min="1" max="50" value="50" /></label>
+                    <label>关键词间隔（毫秒）<input id="request-interval" type="number" min="1000" max="60000" value="1500" /></label>
+                  <label>慢网等待（分钟）<input id="slow-network-minutes" type="number" min="1" max="10" value="5" /></label>
+                  <label>搜索范围<select id="search-scope"><option value="ALL_EXPANDED" selected>自动扩展相关词</option><option value="CORE_SEEDS_ONLY">只研究输入词</option></select></label>
+                  <label>补采顺序<select id="collection-method"><option value="TOP_N" selected>高互动优先，随后补采其余候选</option><option value="CURRENT_PAGE_ALL">按发现顺序逐条补采</option></select></label>
+                  <label class="check-row span-2" hidden><input id="auto-collect-notes" type="checkbox" /> 自动逐条补详情</label>
+                </div></details>
+              </form>
+            </article>
+            <aside class="collection-card-anchor market-control-panel"><span class="collection-step">02 · 观察与控制</span><strong>本轮采集</strong><span id="collection-inline-summary" role="status">尚未启动任务。</span><div id="collection-control-host"></div><div class="collection-inline-numbers" hidden><span>搜索候选 <b id="collection-inline-admitted">0</b></span><span>完整资料 <b id="collection-inline-saved">0</b></span></div><div class="collection-result-action"><span class="collection-step">完整榜单入口</span><p>在下方按研究用途选择参考；需要比较全部作品及变化时，进入实时榜单。</p><button id="collection-inline-expand" class="secondary" type="button">查看实时榜单</button><small>榜单包含已采集样本，不是本轮独立结果集。</small></div></aside>
+          </div>
+          <article class="panel research-workspace">
+            <div class="panel-heading"><div><span class="collection-step">03 · 把数据用于作品</span><h2>参考什么，验证什么</h2><p>从已采样本中挑选参考，不代替你的账号定位，也不自动生成或发布作品。</p></div></div>
+            <div class="research-controls"><label>研究用途<select id="research-purpose"><option value="topic">决定下一篇研究什么</option><option value="value">研究什么内容值得收藏</option><option value="share">研究什么内容值得转发</option></select></label><label>证据范围<select id="research-scope"><option value="direction">当前方向</option><option value="all">全站样本</option></select></label><label>最近观察<select id="research-window"><option value="24">24 小时</option><option value="72">3 天</option><option value="168">7 天</option></select></label></div>
+            <p id="research-evidence-summary" role="status">等待读取真实样本。</p><p id="research-boundary" class="form-hint"></p>
+            <div class="research-guidance"><h3>先核对证据</h3><p id="research-question"></p><small>选题参考按累计点赞、收藏参考按累计收藏、转发参考按累计转发排序。最多展示 3 条，不是爆款预测。</small></div>
+            <div id="research-examples"></div>
+            <div class="research-guidance"><h3>再验证自己的作品</h3><p id="research-experiment"></p><label>我的尝试与结果<textarea id="research-review" rows="5" placeholder="先查看证据，再点‘记为参考’保留当时的数据。记录核对到的做法、下一篇只改什么，以及实际结果。"></textarea></label><div class="research-review-footer"><small id="research-review-status" role="status">按方向与研究用途分别保存。</small><button id="research-review-export" class="secondary" type="button">导出参考与复盘</button></div></div>
+          </article>
+          <details id="work-comparison" class="panel work-comparison"><summary>我的作品对照 · 可选，看看这次有没有改善</summary>
+            <p>将自己的新作品与同账号的一篇同类作品对照。填写发布后相同观察时长的数据，不直接与热门帖累计量比较。</p>
+            <form data-comparison-form>
+              <div class="comparison-table-scroll"><table><caption>手动记录 · 空白表示未知，真实零值请填 0</caption><thead><tr><th scope="col">比较对象</th><th scope="col">名称或地址</th><th scope="col">观察小时</th><th scope="col">点赞</th><th scope="col">收藏</th><th scope="col">转发</th></tr></thead><tbody></tbody></table></div>
+              <label class="comparison-confirm"><input name="comparable" type="checkbox" /> 我已确认：同账号、相近选题与内容形式</label>
+            </form>
+            <div data-comparison-output aria-live="polite"></div>
+            <div class="comparison-footer"><small data-comparison-status role="status">仅保存在当前浏览器。</small><button type="button" class="secondary" data-comparison-export>导出对照记录</button></div>
+          </details>
+          <details class="collection-diagnostics panel"><summary>辅助线索 · 关键词覆盖与重复账号</summary><p>用于检查搜索覆盖，不等于选题建议或爆款证明。</p><div class="collection-results-grid">
+            <article><div class="panel-heading"><div><h2>关键词覆盖</h2><p>查看哪些关键词找到了候选，避免只看总量。</p></div></div><div id="collection-opportunities" class="collection-insight-list empty-state">完成首个关键词后自动出现</div></article>
+            <article><div class="panel-heading"><div><h2>重复出现的账号</h2><p>同批搜索中的重复出现，只作为补充线索。</p></div></div><div id="collection-accounts" class="collection-insight-list empty-state">完成首个关键词后自动出现</div></article>
+          </div></details>
+          <article class="panel collection-history-card"><div class="panel-heading"><div><h2>最近采集</h2><p>保留完成、暂停和失败记录，可再次查看或导出。</p></div></div><div class="record-list empty-state" id="collection-history">尚无运行历史</div></article>
+          <section hidden aria-hidden="true"><button id="run-fixture" type="button"></button><pre id="collection-output"></pre><span id="browser-queue-count"></span><form id="browser-task-form"><input id="browser-task-source" value="manual-research" /><select id="browser-task-type"><option value="SEARCH">搜索页</option><option value="NOTE_DETAIL">详情页</option></select><input id="browser-task-url" /><input id="browser-task-priority" type="number" value="50" /><button type="submit"></button></form><button id="refresh-browser-queue" type="button"></button><div id="browser-ingestion-state"></div><div id="browser-task-list"></div></section>
+        </section>
+
+        <section class="view" data-view-panel="database">
+          <div class="section-intro"><div><h2>我收藏的具体帖子</h2><p>只保留你主动收藏的帖子，按收藏时的方向分类。勾选多条可批量复制地址或删除。</p></div><strong id="favorite-count">0 条</strong></div>
+          <article class="panel"><div class="button-row"><button class="secondary" id="favorites-copy" type="button">复制所选地址</button><button class="danger" id="favorites-delete" type="button">删除所选</button></div><div id="favorite-list" class="favorite-list"></div></article>
+          <section hidden aria-hidden="true">
+          <div class="shared-recommendation" data-recommendation></div>
+          <div class="section-intro"><div><h2>智能自动选题</h2><p>依据点赞、收藏、转发、排名与同帖数据变化自动排序；账号方向尚未设定时，只给平台机会，不替你确定赛道。</p></div></div>
+          <div class="topic-filters" id="topic-filters"><button class="filter active" data-topic-filter="ALL" type="button">自动排序</button><button class="filter" data-topic-filter="DO_NOW" type="button">值得马上做</button><button class="filter" data-topic-filter="SHARES" type="button">转发强</button><button class="filter" data-topic-filter="SAVES" type="button">收藏强</button><button class="filter" data-topic-filter="RISING" type="button">正在上升</button></div>
+          <div class="topic-suggestions" id="database-suggestions"></div>
+          <div class="section-intro"><div><h2>我已加入的选题</h2><p>保留你的主动选择，并持续同步最新数据与推荐优先级。</p></div><strong id="database-count">0 个选题</strong></div>
+          <article class="panel"><div class="database-toolbar simple"><input id="database-search" class="search-input" placeholder="搜索我的选题" /></div><div class="table-wrap"><table><thead><tr><th>选题</th><th>当前热度</th><th>留下它的原因</th><th>下一步</th></tr></thead><tbody id="database-rows"></tbody></table></div></article>
+          <section class="workspace-section"><div class="section-intro"><div><h2>爆款拆解：先看结论</h2><p>证据、爆点机制和可复用动作集中在选题下方，不再单独占一个板块。</p></div></div><div id="analysis-cards" class="analysis-list"></div></section>
+          <section hidden aria-hidden="true"><div id="decision-cards"></div></section>
+          <section hidden aria-hidden="true"><span id="database-health"></span><input id="database-tag-filter" value="重点跟进" /><select id="database-view"><option value=""></option></select><button id="apply-database-view" type="button"></button><button id="save-database-view" type="button"></button><div id="database-restore-status"></div><input id="database-restore-file" type="file" /><button id="restore-database" type="button"></button><a href="/api/export/database.json">离线 JSON</a><a href="/api/export/browser-database.json">真实 JSON</a><a href="/api/export/browser-notes.csv">真实 CSV</a><a href="/api/export/browser-research.md">研究包</a><a href="/api/database/backup">备份 SQLite</a></section>
+          </section>
+        </section>
+
+        <section class="view" data-view-panel="history">
+          <div class="section-intro"><div><h2>我看过的爆款</h2><p>打开过的内容都会留在这里，可筛选后再次进入详情。</p></div><strong id="history-count">0 条记录</strong></div>
+          <article class="panel"><div class="history-filters"><input id="history-search" class="search-input" placeholder="搜索标题、作者或领域" /><select id="history-source"><option value="">全部来源</option><option value="overview">趋势与榜单</option><option value="ranking">帖子实时榜</option><option value="database">我的收藏</option><option value="analysis">爆款拆解（旧记录）</option><option value="decision">作品策划（旧记录）</option></select><select id="history-selected"><option value="">全部状态</option><option value="true">已收藏</option><option value="false">未收藏</option></select><button class="secondary" id="history-refresh" type="button" hidden>更新历史</button><button class="danger" id="history-clear" type="button">一键清空</button></div><div id="history-list" class="history-list"><div class="loading-cell">正在读取浏览历史…</div></div></article>
+        </section>
+
+        <section class="view" data-view-panel="detail">
+          <article class="panel detail-panel" id="detail-content"><div class="loading-cell">正在读取内容详情…</div></article>
+        </section>
+
+        <section class="view" data-view-panel="connections" hidden aria-hidden="true">
+          <div class="two-column">
+            <article class="panel bridge-health"><div class="panel-heading"><div><h2>浏览器采集桥</h2><p>心跳超过 45 秒即视为失联；只有扩展在线且页面被识别，真实任务才具备执行条件。</p></div><span class="badge warn" id="bridge-connection-status">未连接</span></div><div id="bridge-health-details" class="record-list empty-state">尚未收到扩展心跳</div></article>
+            <article class="panel bridge-health"><div class="panel-heading"><div><h2>真实页面字段核验</h2><p>机器覆盖只证明字段被观察到；必须让原页面与回执并排，逐字段判定后才可能通过。</p></div><span class="badge warn" id="field-validation-status">尚未开始</span></div><div id="field-validation-details" class="record-list empty-state">尚无真实页面字段核验回执</div><form id="human-comparison-form" class="form-grid"><label class="span-2">当前可见页面 URL<input id="human-comparison-source-url" type="url" placeholder="https://www.xiaohongshu.com/..." /></label><label>核验人<input id="human-comparison-reviewer" placeholder="LOCAL_OPERATOR" /></label><label class="check-row"><input id="human-comparison-confirmed" type="checkbox" /> 我正并排查看该真实页面</label><div id="human-comparison-fields" class="span-2 record-list empty-state">收到真实页面回执后显示逐字段判定项</div><div class="button-row span-2"><button class="primary" id="human-comparison-submit" type="submit" disabled>保存不可变人工核验回执</button></div><div id="human-comparison-result" class="span-2 record-list empty-state">尚无人工对照回执</div></form></article>
+            <article class="panel form-panel"><div class="panel-heading"><div><h2>矩阵账号登记</h2><p>只保存账号标识与用途，不保存 Cookie 或密码。真实账号登录与页面执行器仍由后续适配器完成。</p></div></div><form id="matrix-form" class="form-grid"><label>账号标识<input id="matrix-id" placeholder="例如 account-main" /></label><label>显示名称<input id="matrix-label" placeholder="主账号" /></label><label class="span-2">用途说明<input id="matrix-hint" placeholder="用于区分账号职责，不是登录凭据" /></label><label class="check-row"><input id="matrix-enabled" type="checkbox" checked /> 启用</label><div class="button-row"><button class="primary" type="submit">加入矩阵</button></div></form><div id="matrix-list" class="record-list empty-state">尚未登记账号</div></article>
+            <article class="panel form-panel"><div class="panel-heading"><div><h2>飞书同步</h2><p>Webhook 只从环境变量读取；每次真实同步都要在界面再次确认。</p></div><span class="badge warn" id="feishu-status">未配置</span></div><form id="feishu-form" class="form-grid"><label class="span-2">Webhook 环境变量<input id="feishu-env" value="FEISHU_WEBHOOK_URL" /></label><label class="check-row"><input id="feishu-enabled" type="checkbox" /> 启用同步</label><div class="button-row"><button class="secondary" type="submit">保存配置</button><button class="primary" id="feishu-sync" type="button">同步当前摘要</button></div></form></article>
+          </div>
+        </section>
+
+        <section class="view" data-view-panel="models">
+          <article class="panel model-connector"><div class="panel-heading"><div><h2>模型连接设置</h2><p>地址与密钥只需保存一次。只有启用模型 API 后，才会读取模型或发起智能分析；关闭时普通联网采集照常运行。</p></div><span class="badge warn" id="model-connection-status">尚未连接</span></div><div id="provider-cards" class="provider-connector"></div><div id="route-list" hidden></div><button id="save-routes" type="button" hidden></button></article>
+        </section>
+      </main>
+    </div>
+    <button class="collection-card-expand" id="collection-card-expand" type="button" aria-controls="collection-live-card" aria-expanded="false" aria-label="展开实时采集控制卡" hidden>展开</button>
+    <aside class="collection-live-card" id="collection-live-card" aria-live="polite" aria-label="实时采集控制卡" hidden>
+      <header class="collection-card-head"><div><strong>小红书采集工作台</strong><small>实时控制卡</small></div><button id="collection-card-close" type="button" aria-label="收起采集卡">×</button></header>
+      <dl class="collection-task-facts">
+        <div><dt>阶段</dt><dd id="collection-stage">等待开始</dd></div>
+        <div><dt>当前词</dt><dd id="collection-current-keyword">尚未开始</dd></div>
+        <div><dt>种子</dt><dd id="collection-seed-progress">0/0</dd></div>
+        <div><dt>本词联想</dt><dd id="collection-related-count">0</dd></div>
+        <div><dt>入台目标</dt><dd><span id="collection-keyword-count">0/0</span> · 已收录 <span id="collection-total-note-count">0</span></dd></div>
+        <div><dt>层数</dt><dd id="collection-depth">0</dd></div>
+        <div><dt>状态</dt><dd><span class="badge warn" id="collection-status">待开始</span></dd></div>
+      </dl>
+      <div class="collection-progress-track" id="collection-progress-track" role="progressbar" aria-label="采集任务进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="collection-progress-fill"></i></div>
+      <p id="collection-progress-text" class="collection-progress-copy">输入关键词后开始</p>
+      <div class="collection-card-actions"><button class="secondary" id="pause-collection" type="button">暂停</button><button class="secondary" id="resume-collection" type="button">继续</button><button class="primary" id="collect-notes" type="button" hidden>采笔记</button><details class="collection-export-menu"><summary>导出</summary><div><a id="export-research-json" href="/api/research-export?format=json">JSON</a><a id="export-research-csv" href="/api/research-export?format=csv">表格</a><a id="export-research-md" href="/api/research-export?format=md">摘要</a></div></details></div>
+      <details class="collection-card-more"><summary>任务明细</summary><div class="collection-mini-stats"><span>有效入台 <b id="collection-saved-count">0</b></span><span hidden>评论 <b id="collection-comment-count">0</b></span><span>缺口 <b id="collection-gap-count">0</b></span></div><div id="collection-keyword-list" class="collection-keyword-list"><span>尚无关键词进度</span></div><button class="danger" id="cancel-collection" type="button">结束任务</button></details>
+      <p id="collection-phase" class="sr-only">等待开始</p>
+    </aside>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="/apps/workbench-ui/app.js"></script>
+  </body>
+</html>

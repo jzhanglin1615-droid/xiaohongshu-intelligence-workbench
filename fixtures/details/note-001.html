@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><title>完整详情夹具一</title></head>
+<body>
+  <article data-fixture="note-detail">完整正文与两项素材。</article>
+  <script id="xhs-fixture" type="application/json">
+  {
+    "kind": "NOTE_DETAIL",
+    "sourceUrl": "https://example.invalid/note/note-001",
+    "collectedAt": "2026-09-24T00:01:00.000Z",
+    "data": {
+      "noteId": "note-001",
+      "title": "三个效率工具的实际用法",
+      "body": "这是完全脱敏的离线示例正文，用于验证搜索卡片和详情证据可以合并。",
+      "authorId": "author-001",
+      "authorName": "示例作者甲",
+      "sourceUrl": "https://example.invalid/note/note-001",
+      "metrics": { "likes": 123, "collects": 45, "comments": 9 },
+      "expectedAssetCount": 2,
+      "assets": [
+        { "type": "IMAGE", "ordinal": 1, "sourceUrl": "https://example.invalid/assets/note-001-1.jpg" },
+        { "type": "IMAGE", "ordinal": 2, "sourceUrl": "https://example.invalid/assets/note-001-2.jpg" }
+      ]
+    }
+  }
+  </script>
+</body>
+</html>

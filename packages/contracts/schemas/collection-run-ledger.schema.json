@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.xhs-workbench/contracts/collection-run-ledger.schema.json",
+  "title": "CollectionRunLedger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "runId", "taskId", "keywordPlanId", "enrichmentPlanId", "status", "budget", "targets", "recoveryCount", "createdAt", "updatedAt"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "runId": { "type": "string", "minLength": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "keywordPlanId": { "type": "string", "minLength": 1 },
+    "enrichmentPlanId": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["READY", "RUNNING", "PAUSED", "COMPLETED", "COMPLETED_WITH_BLOCKS", "FAILED", "CANCELLED"] },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maxRankingSnapshots", "maxKeywordSearches", "maxDetailTargets", "maxCommentTargets"],
+      "properties": {
+        "maxRankingSnapshots": { "type": "integer", "minimum": 0, "maximum": 10000 },
+        "maxKeywordSearches": { "type": "integer", "minimum": 0, "maximum": 10000 },
+        "maxDetailTargets": { "type": "integer", "minimum": 0, "maximum": 10000 },
+        "maxCommentTargets": { "type": "integer", "minimum": 0, "maximum": 10000 }
+      }
+    },
+    "targets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["targetId", "stage", "state", "priority", "keywordId", "query", "scopeId", "noteId", "attempts", "evidenceEnvelopeIds", "lastError", "errorHistory", "dispositionReason", "updatedAt"],
+        "properties": {
+          "targetId": { "type": "string", "minLength": 1 },
+          "stage": { "enum": ["RANKING_SNAPSHOT", "KEYWORD_SEARCH", "DETAIL", "COMMENTS"] },
+          "state": { "enum": ["QUEUED", "IN_PROGRESS", "COMPLETED", "BLOCKED", "FAILED", "SKIPPED"] },
+          "priority": { "type": "number", "minimum": 0, "maximum": 100 },
+          "keywordId": { "type": ["string", "null"], "minLength": 1 },
+          "query": { "type": ["string", "null"], "minLength": 1 },
+          "scopeId": { "type": ["string", "null"], "minLength": 1 },
+          "noteId": { "type": ["string", "null"], "minLength": 1 },
+          "attempts": { "type": "integer", "minimum": 0 },
+          "evidenceEnvelopeIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+          "lastError": {
+            "oneOf": [
+              { "type": "null" },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["targetId", "category", "code", "message", "retryable"],
+                "properties": {
+                  "targetId": { "type": "string", "minLength": 1 },
+                  "category": { "enum": ["RETRYABLE", "NEEDS_HUMAN", "PERMANENT", "POLICY_BLOCKED"] },
+                  "code": { "type": "string", "minLength": 1 },
+                  "message": { "type": "string", "minLength": 1 },
+                  "retryable": { "type": "boolean" }
+                }
+              }
+            ]
+          },
+          "errorHistory": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["targetId", "category", "code", "message", "retryable"],
+              "properties": {
+                "targetId": { "type": "string", "minLength": 1 },
+                "category": { "enum": ["RETRYABLE", "NEEDS_HUMAN", "PERMANENT", "POLICY_BLOCKED"] },
+                "code": { "type": "string", "minLength": 1 },
+                "message": { "type": "string", "minLength": 1 },
+                "retryable": { "type": "boolean" }
+              }
+            }
+          },
+          "dispositionReason": { "type": ["string", "null"], "minLength": 1 },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "recoveryCount": { "type": "integer", "minimum": 0 },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" }
+  }
+}

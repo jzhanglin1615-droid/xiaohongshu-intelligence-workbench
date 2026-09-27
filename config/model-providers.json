@@ -1,0 +1,70 @@
+{
+  "schemaVersion": "1.0.0",
+  "providers": [
+    {
+      "providerId": "openai",
+      "label": "OpenAI",
+      "protocol": "OPENAI_COMPATIBLE",
+      "baseUrl": "https://api.openai.com/v1/",
+      "apiKeyEnv": "OPENAI_API_KEY",
+      "enabled": false,
+      "modelsPath": "models",
+      "chatPath": "chat/completions",
+      "timeoutMs": 60000
+    },
+    {
+      "providerId": "deepseek",
+      "label": "DeepSeek",
+      "protocol": "OPENAI_COMPATIBLE",
+      "baseUrl": "https://api.deepseek.com/",
+      "apiKeyEnv": "DEEPSEEK_API_KEY",
+      "enabled": true,
+      "modelsPath": "models",
+      "chatPath": "chat/completions",
+      "timeoutMs": 60000
+    },
+    {
+      "providerId": "custom",
+      "label": "其他兼容服务",
+      "protocol": "OPENAI_COMPATIBLE",
+      "baseUrl": "https://example.com/v1/",
+      "apiKeyEnv": "XHS_CUSTOM_MODEL_API_KEY",
+      "enabled": false,
+      "modelsPath": "models",
+      "chatPath": "chat/completions",
+      "timeoutMs": 60000
+    }
+  ],
+  "routes": [
+    {
+      "task": "EXTRACT",
+      "providerId": "",
+      "modelId": "",
+      "fallbackProviderIds": []
+    },
+    {
+      "task": "SCREEN",
+      "providerId": "",
+      "modelId": "",
+      "fallbackProviderIds": []
+    },
+    {
+      "task": "DEEP_ANALYSIS",
+      "providerId": "",
+      "modelId": "",
+      "fallbackProviderIds": []
+    },
+    {
+      "task": "VERIFY",
+      "providerId": "",
+      "modelId": "",
+      "fallbackProviderIds": []
+    },
+    {
+      "task": "DECISION_SUPPORT",
+      "providerId": "",
+      "modelId": "",
+      "fallbackProviderIds": []
+    }
+  ]
+}

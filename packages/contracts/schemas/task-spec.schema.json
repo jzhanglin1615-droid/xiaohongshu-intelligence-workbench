@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.xhs-workbench/contracts/task-spec.schema.json",
+  "title": "TaskSpec",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "taskId", "projectId", "goal", "seedKeywords", "limits", "authorization", "createdAt"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "taskId": { "type": "string", "minLength": 1 },
+    "projectId": { "type": "string", "minLength": 1 },
+    "goal": { "type": "string", "minLength": 1 },
+    "seedKeywords": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maxSearchResults", "maxNoteDetails"],
+      "properties": {
+        "maxSearchResults": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "maxNoteDetails": { "type": "integer", "minimum": 1, "maximum": 3 }
+      }
+    },
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["readVisiblePages", "externalApi", "upload", "publish"],
+      "properties": {
+        "readVisiblePages": { "const": true },
+        "externalApi": { "type": "boolean" },
+        "upload": { "type": "boolean" },
+        "publish": { "type": "boolean" }
+      }
+    },
+    "createdAt": { "type": "string", "format": "date-time" }
+  }
+}

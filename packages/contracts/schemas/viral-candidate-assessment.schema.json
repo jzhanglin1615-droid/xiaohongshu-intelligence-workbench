@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ViralCandidateAssessment",
+  "type": "object",
+  "required": ["schemaVersion", "assessmentId", "scopeId", "noteId", "status", "score", "formulaVersion", "observationWindow", "sample", "rawMetrics", "baseline", "scoreComponents", "signals", "limitations", "evidenceEnvelopeIds", "counterexampleNoteIds", "assessedAt"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "assessmentId": { "type": "string", "minLength": 1 },
+    "scopeId": { "type": "string", "minLength": 1 },
+    "noteId": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["ELIGIBLE", "INSUFFICIENT_EVIDENCE", "BLOCKED"] },
+    "score": { "type": ["number", "null"], "minimum": 0, "maximum": 100 },
+    "formulaVersion": { "type": "string", "minLength": 1 },
+    "observationWindow": { "type": "object", "required": ["startedAt", "endedAt"] },
+    "sample": { "type": "object", "required": ["totalNotes", "eligibleNotes", "minimumRequired", "missingMetricRatio"] },
+    "rawMetrics": { "type": "object", "required": ["likes", "collects", "comments", "currentRank", "rankDelta", "consecutiveAppearances"] },
+    "baseline": { "type": "object", "required": ["method", "likes", "collects", "comments"] },
+    "scoreComponents": { "type": ["object", "null"] },
+    "signals": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "limitations": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "evidenceEnvelopeIds": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "counterexampleNoteIds": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "assessedAt": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

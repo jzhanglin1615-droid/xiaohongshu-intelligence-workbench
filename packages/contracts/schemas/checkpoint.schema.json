@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.xhs-workbench/contracts/checkpoint.schema.json",
+  "title": "Checkpoint",
+  "type": "object",
+  "required": ["schemaVersion", "taskId", "state", "completedTargets", "failedTargets", "updatedAt"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "taskId": { "type": "string", "minLength": 1 },
+    "state": { "enum": ["DRAFT", "READY", "RUNNING", "PAUSED", "NEEDS_HUMAN", "FAILED", "COMPLETED", "CANCELLED"] },
+    "completedTargets": { "type": "array", "items": { "type": "string" } },
+    "failedTargets": { "type": "array" },
+    "updatedAt": { "type": "string", "format": "date-time" }
+  }
+}

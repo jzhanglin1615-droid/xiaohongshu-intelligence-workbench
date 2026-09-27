@@ -1,0 +1,25 @@
+{
+  "name": "xiaohongshu-intelligence-workbench",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "setup": "node scripts/setup-local.mjs",
+    "test": "node --test --experimental-strip-types packages/contracts/test/contracts.test.ts packages/core/test/sqlite-store.test.ts packages/core/test/state-machine.test.ts packages/core/test/keyword-browser-run.test.ts packages/core/test/ranking-browser-run.test.ts packages/core/test/ranking-run-export.test.ts packages/core/test/workbench-runtime-recovery.test.ts packages/core/test/keyword-planner.test.ts packages/core/test/retry-queue.test.ts packages/core/test/orchestrator-retry.test.ts packages/core/test/run-control.test.ts packages/core/test/vertical-slice.test.ts packages/core/test/ranking-ledger.test.ts packages/core/test/completeness-ledger.test.ts packages/core/test/enrichment-planner.test.ts packages/core/test/ranking-workbench.test.ts packages/core/test/collection-run-ledger.test.ts packages/core/test/collection-run-executor.test.ts packages/core/test/browser-snapshot-ingestion.test.ts packages/core/test/viral-intelligence.test.ts packages/core/test/model-gateway.test.ts packages/core/test/ranking-monitor.test.ts packages/core/test/browser-task-queue.test.ts apps/fixture-runner/test/fixture-parser.test.ts apps/workbench-ui/task-file-parser.test.js apps/workbench-ui/live-ranking.test.js apps/workbench-ui/market-trends.test.js apps/workbench-ui/topic-intelligence.test.js apps/workbench-ui/opencli-xhs-collector.test.js apps/workbench-ui/content-recommendation.test.js apps/workbench-ui/auto-ranking-monitor.test.js apps/workbench-ui/browser-task-target.test.js apps/workbench-ui/refresh-feedback.test.js apps/workbench-ui/ui-contract.test.js apps/workbench-ui/runtime-control.test.js apps/workbench-ui/browser-bridge-health.test.js apps/workbench-ui/browser-field-validation.test.js apps/workbench-ui/browser-human-comparison.test.js apps/browser-extension/extractor.test.js apps/browser-extension/auto-run-controller.test.js apps/browser-extension/comment-traversal-controller.test.js apps/browser-extension/lease-recovery-controller.test.js packages/xhs-dom-adapter/test/protocol.test.ts packages/xhs-dom-adapter/test/capabilities.test.ts packages/xhs-dom-adapter/test/xhs-dom-adapter.test.ts",
+    "test:ui-regressions": "node --test apps/workbench-ui/collection-start.test.js apps/workbench-ui/collection-progress.test.js apps/workbench-ui/collection-progress-contract.test.js apps/workbench-ui/market-direction-save.test.js apps/browser-extension/panel-run.test.js",
+    "test:collection-recovery": "node --test apps/browser-extension/detail-metric.test.js apps/browser-extension/extractor.test.js apps/browser-extension/task-failure.test.js apps/browser-extension/auto-run-controller.test.js apps/browser-extension/panel-run.test.js packages/core/test/ranking-browser-run.test.ts packages/core/test/browser-task-queue.test.ts",
+    "demo": "node --experimental-strip-types apps/fixture-runner/src/cli.ts",
+    "demo:collection": "node --experimental-strip-types apps/fixture-runner/src/collection-cli.ts",
+    "demo:intelligence": "node --experimental-strip-types apps/fixture-runner/src/intelligence-cli.ts",
+    "preui": "node scripts/setup-local.mjs",
+    "ui": "node --experimental-strip-types apps/workbench-ui/server.mjs"
+  }
+}

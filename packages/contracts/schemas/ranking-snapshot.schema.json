@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.xhs-workbench/contracts/ranking-snapshot.schema.json",
+  "title": "RankingSnapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "snapshotId", "scopeId", "scopeLabel", "coverage", "expectedSlots", "entries", "observedAt"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "snapshotId": { "type": "string", "minLength": 1 },
+    "scopeId": { "type": "string", "minLength": 1 },
+    "scopeLabel": { "type": "string", "minLength": 1 },
+    "coverage": { "enum": ["COMPLETE", "PARTIAL", "UNKNOWN"] },
+    "expectedSlots": { "type": ["integer", "null"], "minimum": 0 },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["noteId", "rank", "sourceEnvelopeId"],
+        "properties": {
+          "noteId": { "type": "string", "minLength": 1 },
+          "rank": { "type": "integer", "minimum": 1 },
+          "sourceEnvelopeId": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "observedAt": { "type": "string", "format": "date-time" }
+  }
+}
