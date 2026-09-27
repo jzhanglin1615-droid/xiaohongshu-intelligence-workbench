@@ -228,7 +228,7 @@ test("the model connector accepts a key, verifies it, retrieves models and power
   assert.match(app, /\/api\/model\/analyze/);
   assert.match(server, /body\.apiKey/);
   assert.match(server, /providerVerification/);
-  const saveProviderBody = app.match(/async function saveProvider\(card, \{ quiet = false \} = \{\}\) \{([\s\S]*?)\n\}\nasync function updateModelApiMode/)?.[1] ?? "";
+  const saveProviderBody = app.match(/async function saveProvider\(card, \{ quiet = false \} = \{\}\) \{([\s\S]*?)\r?\n\}\r?\nasync function updateModelApiMode/)?.[1] ?? "";
   assert.match(saveProviderBody, /await api\(`\/api\/providers\/\$\{encodeURIComponent\(id\)\}`/);
   assert.doesNotMatch(saveProviderBody, /Promise\.all/);
   assert.match(app, /async function testModelInference\(provider, modelId\)/);
@@ -237,7 +237,7 @@ test("the model connector accepts a key, verifies it, retrieves models and power
   assert.match(app, /data-manual-model/);
   assert.match(app, /await saveProvider\(card, \{ quiet: true \}\)/);
   assert.match(app, /if \(!window\.confirm\("这会向该模型服务发出一次真实联网请求/);
-  const pullBody = app.match(/async function pullModels\(card\) \{([\s\S]*?)\n\}\nasync function useSimpleModel/)?.[1] ?? "";
+  const pullBody = app.match(/async function pullModels\(card\) \{([\s\S]*?)\r?\n\}\r?\nasync function useSimpleModel/)?.[1] ?? "";
   assert.ok(pullBody.indexOf("window.confirm") < pullBody.indexOf("saveProvider(card, { quiet: true })"));
   assert.match(pullBody, /AbortController/);
   assert.match(pullBody, /clearTimeout\(timer\)/);
