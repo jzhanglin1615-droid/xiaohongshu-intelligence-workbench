@@ -53,7 +53,14 @@ try {
   $commit = (& git -C $projectRoot rev-parse --short=8 HEAD).Trim()
   $outputPath = Join-Path $distRoot "xiaohongshu-workbench-windows-x64-$commit.zip"
   if (Test-Path -LiteralPath $outputPath) { throw "Release archive already exists: $outputPath" }
-  Compress-Archive -LiteralPath $packageRoot -DestinationPath $outputPath -CompressionLevel Optimal
+  Add-Type -AssemblyName System.IO.Compression.FileSystem
+  [System.IO.Compression.ZipFile]::CreateFromDirectory(
+    $packageRoot,
+    $outputPath,
+    [System.IO.Compression.CompressionLevel]::Optimal,
+    $true,
+    [System.Text.Encoding]::UTF8
+  )
   [pscustomobject]@{
     archive = $outputPath
     sha256 = (Get-FileHash -LiteralPath $outputPath -Algorithm SHA256).Hash
