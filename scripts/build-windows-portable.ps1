@@ -5,6 +5,9 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+if ($PSVersionTable.PSVersion.Major -lt 7) {
+  throw "Build requires PowerShell 7 or newer (pwsh) to preserve UTF-8 filenames."
+}
 $projectRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot ".."))
 $distRoot = Join-Path $projectRoot "dist"
 New-Item -ItemType Directory -Force -Path $distRoot | Out-Null
